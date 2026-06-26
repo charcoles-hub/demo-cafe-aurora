@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@theme {
+  --color-brand-50:#fdf6ec; --color-brand-100:#f9e8cf; --color-brand-200:#f1cf9c;
+  --color-brand-300:#e7b069; --color-brand-400:#db9542; --color-brand-500:#c97a22;
+  --color-brand-600:#a85f17; --color-brand-700:#854916; --color-brand-800:#6c3c18; --color-brand-900:#5b3317;
+  --color-ink:#2a2017; --color-muted:#7a6c5b;
+  --color-surface:#fffdf9; --color-surface-2:#fdf6ec; --color-elevated:#ffffff; --color-line:#ecdfcb;
+  --font-display:"Bebas Neue",ui-sans-serif,system-ui,sans-serif;
+  --font-sans:"Inter",ui-sans-serif,system-ui,sans-serif;
+}
+html{scroll-behavior:smooth} body{font-family:var(--font-sans);color:var(--color-ink);background:var(--color-surface)}
+@keyframes fade-up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.reveal{animation:fade-up .6s ease both}
