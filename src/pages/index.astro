@@ -1,20 +1,430 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import Features from '../components/Features.astro';
-import Pricing from '../components/Pricing.astro';
-import Contact from '../components/Contact.astro';
-import Footer from '../components/Footer.astro';
+const img = (f: string) => `${import.meta.env.BASE_URL}/img/${f}`.replace("//", "/");
+const destacados = [
+  { img: "flatwhite.webp", n: "Flat white", d: "Doble espresso de tueste propio y leche sedosa", p: "2,80" },
+  { img: "croissant.webp", n: "Croissant artesano", d: "Mantequilla francesa, horneado aquí cada mañana", p: "2,50" },
+  { img: "brunch.webp", n: "Brunch del día", d: "Tosta principal, dulce, zumo natural y café", p: "12,00" },
+];
+const cafes = [
+  { n: "Espresso", p: "1,60" },
+  { n: "Cortado", p: "1,80" },
+  { n: "Café con leche", p: "2,20" },
+  { n: "Flat white", p: "2,80" },
+  { n: "Filtrado V60", p: "3,50" },
+  { n: "Cold brew", p: "3,80" },
+];
+const cocina = [
+  { n: "Tostada con tomate y AOVE", p: "2,80" },
+  { n: "Croissant de mantequilla", p: "2,50" },
+  { n: "Tosta de aguacate y huevo", p: "6,50" },
+  { n: "Tosta de salmón y queso fresco", p: "7,50" },
+  { n: "Bizcocho del día", p: "3,20" },
+  { n: "Zumo de naranja natural", p: "3,00" },
+];
+const reviews = [
+  { n: "Carmen G.", a: "C", t: "hace 2 semanas", q: "El flat white más rico que he tomado en Sevilla. El local es precioso, con su arco de piedra y el suelo antiguo. Se está de lujo." },
+  { n: "Álvaro M.", a: "A", t: "hace 1 mes", q: "Vengo casi todos los sábados a por el brunch. Los croissants los hacen ellos y se nota. Trato de diez." },
+  { n: "Lucía R.", a: "L", t: "hace 3 semanas", q: "Perfecto para trabajar por la mañana: tranquilo, con enchufes y un café serio. El zumo es natural de verdad." },
+];
 ---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Café Aurora · Cafetería de especialidad en Sevilla, junto a Puerta Osario. Tueste propio, croissants artesanos y brunch todos los días de 8:00 a 20:00." />
+    <title>Café Aurora · Cafetería de especialidad · Sevilla</title>
+    <meta name="theme-color" content="#faf5ec" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Café Aurora · Cafetería de especialidad en Sevilla" />
+    <meta property="og:description" content="Tueste propio, croissants artesanos y brunch todos los días. Calle Sol 12, Sevilla." />
+    <meta property="og:image" content="https://charcoles-hub.github.io/demo-cafe-aurora/img/og.jpg" />
+    <meta property="og:url" content="https://charcoles-hub.github.io/demo-cafe-aurora/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}/favicon.svg`.replace("//","/")} type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="bar">
+      <a href="#top" class="wordmark">Café <span>Aurora</span></a>
+      <nav class="bar-nav">
+        <a href="#carta">La carta</a>
+        <a href="#rincon">El local</a>
+        <a href="#visita">Visítanos</a>
+      </nav>
+      <a href="https://wa.me/34600555666?text=Hola%2C%20quiero%20reservar%20mesa%20en%20Café%20Aurora" class="btn btn-sm">Reservar mesa</a>
+    </header>
 
-<Layout>
-  <Nav />
-  <main>
-    <Hero />
-    <Features />
-    <Pricing />
-    <Contact />
-  </main>
-  <Footer />
-</Layout>
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Cafetería de especialidad · Sevilla</p>
+          <h1>El día empieza mejor <em>con calma.</em></h1>
+          <p class="lead">Tueste propio, croissants horneados aquí y brunch hasta el cierre, junto a Puerta Osario. Todos los días desde las 8:00.</p>
+          <div class="hero-cta">
+            <a href="#carta" class="btn">Ver la carta</a>
+            <a href="#visita" class="link-arrow">Cómo llegar →</a>
+          </div>
+          <p class="hero-fact">Abierto hoy · 8:00 – 20:00</p>
+        </div>
+        <div class="hero-frame">
+          <img src={img("local.webp")} alt="Interior de Café Aurora: arco de piedra, suelo hidráulico y luz cálida" width="900" height="1200" fetchpriority="high" decoding="async" />
+        </div>
+      </section>
+
+      <section id="carta" class="carta">
+        <header class="sec-head center">
+          <p class="eyebrow">La carta</p>
+          <h2>Lo que sale de la barra</h2>
+        </header>
+
+        <ul class="platos">
+          {destacados.map((d) => (
+            <li class="plato" data-reveal>
+              <div class="plato-media">
+                <img src={img(d.img)} alt={d.n} width="900" height="700" loading="lazy" decoding="async" />
+                <span class="plato-precio">{d.p} €</span>
+              </div>
+              <h3>{d.n}</h3>
+              <p>{d.d}</p>
+            </li>
+          ))}
+        </ul>
+
+        <div class="menu-cols">
+          <div class="menu-col" data-reveal>
+            <h3 class="menu-cat">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 5h13a1 1 0 0 1 1 1v1h1.5A2.5 2.5 0 0 1 22 9.5v1a3.5 3.5 0 0 1-3.5 3.5h-.73A7 7 0 0 1 11 19a7 7 0 0 1-7-7V6a1 1 0 0 1 1-1h-1Zm14 4v3h.5A1.5 1.5 0 0 0 20 10.5v-1A.5.5 0 0 0 19.5 9H18ZM3 21a1 1 0 0 1 0-2h16a1 1 0 0 1 0 2H3Z"/></svg>
+              Cafés
+            </h3>
+            <ul class="menu-list">
+              {cafes.map((x) => (
+                <li><span class="mi-n">{x.n}</span><span class="mi-dots" aria-hidden="true"></span><span class="mi-p">{x.p} €</span></li>
+              ))}
+            </ul>
+          </div>
+          <div class="menu-col" data-reveal>
+            <h3 class="menu-cat">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11 2a7 7 0 0 1 7 7c0 2.4-1.2 4.5-3 5.7V21a1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1v-6.3A7 7 0 0 1 11 2Zm8.5 2A2.5 2.5 0 0 1 22 6.5c0 1.1-.7 2-1.7 2.4L20 22h-2l-.3-13.1A2.6 2.6 0 0 1 16 6.5 2.5 2.5 0 0 1 18.5 4h1Z"/></svg>
+              Cocina y dulce
+            </h3>
+            <ul class="menu-list">
+              {cocina.map((x) => (
+                <li><span class="mi-n">{x.n}</span><span class="mi-dots" aria-hidden="true"></span><span class="mi-p">{x.p} €</span></li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <p class="carta-foot">Leche de avena o sin lactosa sin coste. Todo para llevar, también en taza propia.</p>
+      </section>
+
+      <section id="rincon" class="rincon">
+        <figure class="rincon-media" data-reveal>
+          <img src={img("rincon.webp")} alt="Rincón del café con sofá y mesa de madera bajo luz cálida" width="1167" height="1750" loading="lazy" decoding="async" />
+        </figure>
+        <div class="rincon-copy" data-reveal>
+          <p class="eyebrow">El local</p>
+          <h2>Un rincón con luz <em>para quedarse.</em></h2>
+          <p>Una casa antigua del centro recuperada con calma: arco de piedra, suelo hidráulico original y un patio con sombra donde el café sabe al doble. Wifi y enchufes para las mañanas largas.</p>
+          <ul class="rincon-facts">
+            <li>Tueste propio, molido al momento</li>
+            <li>Horno encendido desde las 6:30</li>
+            <li>Patio interior con sombra</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="quote">
+        <header class="sec-head center">
+          <p class="eyebrow">Lo que dicen</p>
+          <h2>4,8 sobre 5 <em>en Google</em></h2>
+          <p class="reviews-count">214 reseñas · Sevilla</p>
+        </header>
+        <ul class="reviews">
+          {reviews.map((r) => (
+            <li class="review" data-reveal>
+              <div class="review-head">
+                <span class="avatar" aria-hidden="true">{r.a}</span>
+                <div>
+                  <strong>{r.n}</strong>
+                  <span class="review-meta">{r.t}</span>
+                </div>
+              </div>
+              <div class="stars" aria-label="5 de 5 estrellas">★★★★★</div>
+              <p>{r.q}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section id="visita" class="visita">
+        <div class="visita-info">
+          <p class="eyebrow">Visítanos</p>
+          <h2>Te esperamos <em>desde las 8:00.</em></h2>
+          <dl class="facts">
+            <div><dt>Dónde</dt><dd>Calle Sol 12<br/>41003 Sevilla<br/><span class="fact-extra">Junto a Puerta Osario · a 8 min de las Setas</span></dd></div>
+            <div><dt>Horario</dt><dd>Todos los días · 8:00 – 20:00<br/><span class="fact-extra">Cocina hasta las 19:00</span></dd></div>
+            <div><dt>Reservas</dt><dd><a href="tel:+34600555666">+34 600 555 666</a><br/><a href="https://wa.me/34600555666">WhatsApp</a> · <a href="mailto:hola@cafeaurora.es">hola@cafeaurora.es</a></dd></div>
+          </dl>
+        </div>
+        <a class="mapa" href="https://www.google.com/maps/search/?api=1&query=Calle+Sol+12+Sevilla" target="_blank" rel="noopener">
+          <img src={img("mapa.webp")} alt="Mapa de la zona de Puerta Osario con el café señalado" width="768" height="520" loading="lazy" decoding="async" />
+          <span class="mapa-cta">Cómo llegar →</span>
+        </a>
+      </section>
+    </main>
+
+    <nav class="dock" aria-label="Contacto rápido">
+      <a href="tel:+34600555666"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11 11 0 0 0 3.5.56 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .56 3.5 1 1 0 0 1-.25 1z"/></svg>Llamar</a>
+      <a href="https://wa.me/34600555666"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1a13 13 0 0 1-5-3.3 9.4 9.4 0 0 1-2-3.2c-.2-.7 0-1.3.4-1.7l.6-.6c.2-.2.5-.2.7.1l1 1.7c.1.3.1.5 0 .7l-.4.5c-.2.2-.2.4-.1.6a7.6 7.6 0 0 0 3.4 3c.3.1.5.1.7-.1l.6-.7c.2-.2.4-.2.7-.1l1.7.9c.3.1.4.4.3.7z"/></svg>WhatsApp</a>
+      <a href="https://wa.me/34600555666?text=Hola%2C%20quiero%20reservar%20mesa%20en%20Café%20Aurora" class="dock-cta">Reservar mesa</a>
+    </nav>
+
+    <footer class="foot">
+      <span class="wordmark sm">Café <span>Aurora</span></span>
+      <p>Cafetería de especialidad · Calle Sol 12, Sevilla</p>
+      <div class="foot-social">
+        <a href="#">Instagram</a><a href="#">TikTok</a>
+      </div>
+    </footer>
+
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --crema: #faf5ec;
+    --crema-2: #f3ead9;
+    --espresso: #33241a;
+    --terracota: #c2571b;
+    --terracota-fuerte: #a34412;
+    --oliva: #6d6a3f;
+    --muted: #8a7a67;
+    --line: #e7dcc7;
+    --display: "Bricolage Grotesque", system-ui, sans-serif;
+    --ui: "Karla", system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--crema); color: var(--espresso);
+    font-family: var(--ui); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  ::selection { background: var(--terracota); color: var(--crema); }
+  a { color: inherit; text-decoration: none; }
+  em { font-style: normal; color: var(--terracota); }
+
+  .bar {
+    position: sticky; top: 0; z-index: 30;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px clamp(24px, 6vw, 80px);
+    background: color-mix(in srgb, var(--crema) 88%, transparent);
+    backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
+  }
+  .wordmark { font-family: var(--display); font-weight: 700; font-size: 24px; letter-spacing: -.02em; }
+  .wordmark span { color: var(--terracota); }
+  .wordmark.sm { font-size: 20px; }
+  .bar-nav { display: flex; gap: 32px; font-size: 15px; }
+  .bar-nav a { color: var(--muted); transition: color .25s; }
+  .bar-nav a:hover { color: var(--espresso); }
+
+  .btn {
+    display: inline-block; font-weight: 700; font-size: 15px;
+    padding: 14px 28px; border-radius: 999px;
+    background: var(--terracota); color: var(--crema);
+    transition: background .25s, transform .5s linear(0, .55 18%, 1.04 42%, .98 60%, 1), box-shadow .3s;
+  }
+  .btn:hover { background: var(--terracota-fuerte); transform: translateY(-3px); box-shadow: 0 12px 26px -12px rgba(194,87,27,.55); }
+  .btn-sm { padding: 10px 20px; font-size: 14px; }
+  .link-arrow { font-weight: 700; border-bottom: 2px solid var(--line); padding-bottom: 2px; transition: border-color .25s; }
+  .link-arrow:hover { border-color: var(--terracota); }
+  .eyebrow {
+    font-size: 12px; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--terracota); font-weight: 700; margin-bottom: 20px;
+  }
+
+  .hero {
+    display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(30px, 5vw, 70px);
+    align-items: center; min-height: 84vh;
+    padding: clamp(40px, 7vw, 80px) clamp(24px, 6vw, 80px) 60px;
+  }
+  .hero h1 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(44px, 7.5vw, 92px); line-height: 1.0; letter-spacing: -.03em;
+    margin-bottom: 26px; max-width: 12ch;
+  }
+  .lead { max-width: 42ch; color: #5d4c3c; font-size: clamp(16px, 1.6vw, 19px); }
+  .hero-cta { display: flex; align-items: center; gap: 26px; margin-top: 36px; flex-wrap: wrap; }
+  .hero-fact { margin-top: 30px; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--oliva); font-weight: 700; }
+  .hero-copy { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(26px); } }
+  .hero-frame {
+    aspect-ratio: 4/5; border-radius: 220px 220px 14px 14px; overflow: hidden;
+    animation: rise 1.1s .15s cubic-bezier(.2,.7,.2,1) both;
+    border: 1px solid var(--line); box-shadow: 0 30px 60px -40px rgba(51,36,26,.5);
+    position: relative;
+  }
+  .hero-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  section { padding-left: clamp(24px, 6vw, 80px); padding-right: clamp(24px, 6vw, 80px); }
+  .carta, .rincon, .quote, .visita { padding-top: clamp(70px, 9vw, 120px); padding-bottom: clamp(70px, 9vw, 120px); }
+  .sec-head { margin-bottom: 54px; max-width: 720px; }
+  .sec-head.center { margin-inline: auto; text-align: center; }
+  h2 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(32px, 4.6vw, 56px); line-height: 1.04; letter-spacing: -.025em;
+  }
+
+  /* Carta */
+  .carta { background: var(--crema-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .platos {
+    list-style: none; display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: clamp(18px, 3vw, 34px); max-width: 1060px; margin: 0 auto 64px;
+  }
+  .plato h3 { font-family: var(--display); font-weight: 600; font-size: 21px; margin-top: 16px; }
+  .plato p { color: var(--muted); font-size: 15px; margin-top: 4px; }
+  .plato-media { position: relative; border-radius: 14px; overflow: hidden; aspect-ratio: 9/7; }
+  .plato-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+  .plato:hover .plato-media img { transform: scale(1.045); }
+  .plato-precio {
+    position: absolute; right: 12px; bottom: 12px;
+    background: var(--crema); color: var(--espresso); font-family: var(--display); font-weight: 700;
+    padding: 6px 13px; border-radius: 999px; font-size: 16px; box-shadow: 0 6px 18px -8px rgba(51,36,26,.5);
+  }
+  .menu-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 5vw, 70px); max-width: 1060px; margin: 0 auto; }
+  .menu-cat {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--display); font-weight: 700; font-size: 23px; margin-bottom: 20px;
+  }
+  .menu-cat svg { width: 22px; height: 22px; color: var(--terracota); }
+  .menu-list { list-style: none; }
+  .menu-list li { display: flex; align-items: baseline; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+  .mi-n { font-weight: 500; }
+  .mi-dots { flex: 1; border-bottom: 2px dotted var(--line); transform: translateY(-4px); }
+  .mi-p { font-family: var(--display); font-weight: 700; color: var(--terracota-fuerte); white-space: nowrap; }
+  .carta-foot { text-align: center; color: var(--muted); font-size: 14px; margin-top: 40px; }
+
+  /* Rincón */
+  .rincon { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(36px, 6vw, 90px); align-items: center; }
+  .rincon-media { border-radius: 14px; overflow: hidden; aspect-ratio: 4/5; }
+  .rincon-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .rincon-copy p { max-width: 46ch; color: #5d4c3c; margin-top: 18px; }
+  .rincon-facts { list-style: none; margin-top: 26px; display: grid; gap: 10px; }
+  .rincon-facts li { padding-left: 26px; position: relative; font-weight: 500; }
+  .rincon-facts li::before {
+    content: ""; position: absolute; left: 0; top: 7px; width: 12px; height: 12px;
+    border-radius: 50%; background: var(--oliva); opacity: .8;
+  }
+
+  /* Reseñas */
+  .quote { background: var(--crema); text-align: center; }
+  .reviews-count { color: var(--muted); font-size: 14px; margin-top: 10px; }
+  .reviews {
+    list-style: none; display: grid; gap: 18px; grid-template-columns: repeat(3, 1fr);
+    max-width: 1040px; margin-inline: auto; text-align: left;
+  }
+  .review { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; }
+  .review-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .review-head strong { display: block; font-size: 15px; }
+  .avatar {
+    width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--terracota); color: var(--crema); font-weight: 700; flex: none;
+  }
+  .review-meta { font-size: 12.5px; color: var(--muted); }
+  .stars { color: #f4b400; letter-spacing: 2px; font-size: 15px; margin-bottom: 8px; }
+  .review p { font-size: 15.5px; color: #5d4c3c; }
+
+  /* Visita */
+  .visita { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(36px, 6vw, 90px); align-items: center; background: var(--crema-2); border-top: 1px solid var(--line); }
+  .facts { margin-top: 40px; display: grid; gap: 24px; }
+  .facts dt { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--terracota); margin-bottom: 6px; font-weight: 700; }
+  .facts dd { line-height: 1.5; }
+  .fact-extra { color: var(--muted); font-size: 14px; }
+  .facts a { border-bottom: 1px solid color-mix(in srgb, var(--terracota) 45%, transparent); font-weight: 500; }
+  .facts a:hover { color: var(--terracota-fuerte); }
+  .mapa { display: block; position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); }
+  .mapa img { display: block; width: 100%; height: 300px; object-fit: cover; }
+  .mapa-cta {
+    position: absolute; right: 14px; bottom: 14px; background: var(--terracota); color: var(--crema);
+    font-size: 13px; font-weight: 700; padding: 9px 15px; border-radius: 999px;
+  }
+  .mapa:hover .mapa-cta { background: var(--terracota-fuerte); }
+
+  .foot {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    padding: 32px clamp(24px, 6vw, 80px); border-top: 1px solid var(--line);
+  }
+  .foot p { color: var(--muted); font-size: 14px; }
+  .foot-social { display: flex; gap: 22px; font-size: 14px; }
+  .foot-social a { color: var(--muted); transition: color .25s; }
+  .foot-social a:hover { color: var(--terracota); }
+
+  /* Dock móvil */
+  .dock { display: none; }
+  @media (max-width: 860px) {
+    .dock {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+      display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 1px;
+      background: var(--line); border-top: 1px solid var(--line);
+      padding-bottom: env(safe-area-inset-bottom);
+      font-size: 13px;
+    }
+    .dock a {
+      background: var(--crema); color: var(--espresso); min-height: 56px;
+      display: flex; align-items: center; justify-content: center; gap: 7px; font-weight: 700;
+    }
+    .dock svg { width: 17px; height: 17px; fill: var(--terracota); }
+    .dock-cta { background: var(--terracota) !important; color: var(--crema) !important; }
+    body { padding-bottom: 56px; }
+
+    .bar-nav { display: none; }
+    /* foto de fondo en el primer pantallazo */
+    .hero { grid-template-columns: 1fr; position: relative; min-height: 86svh; padding-top: 90px; padding-bottom: 44px; align-content: end; }
+    .hero-frame {
+      position: absolute; inset: 0; aspect-ratio: auto; border: 0; border-radius: 0;
+      box-shadow: none; z-index: 0; animation: none;
+    }
+    .hero-frame::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(178deg, rgba(30,18,10,.30) 0%, rgba(30,18,10,.55) 45%, rgba(30,18,10,.86) 100%);
+    }
+    .hero-copy { position: relative; z-index: 2; color: var(--crema); }
+    .hero-copy .lead { color: #efe3d2; }
+    .hero-copy em, .hero-copy .eyebrow { color: #f2b287; }
+    .hero-fact { color: #d9cdae; }
+    .hero-copy .link-arrow { border-color: rgba(250,245,236,.4); }
+
+    .platos { grid-template-columns: 1fr; }
+    .menu-cols { grid-template-columns: 1fr; }
+    .rincon { grid-template-columns: 1fr; }
+    .rincon-media { aspect-ratio: 4/3; }
+    .visita { grid-template-columns: 1fr; }
+    .reviews { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 84%;
+      overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px;
+      margin-inline: calc(clamp(24px, 6vw, 80px) * -1); padding-inline: clamp(24px, 6vw, 80px);
+      scrollbar-width: none;
+    }
+    .reviews::-webkit-scrollbar { display: none; }
+    .review { scroll-snap-align: center; }
+  }
+
+  h1, h2, .plato h3 { text-wrap: balance; }
+  .lead, .plato p, .review p, .rincon-copy p { text-wrap: pretty; }
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      [data-reveal] {
+        animation: reveal linear both;
+        animation-timeline: view();
+        animation-range: entry 8% cover 26%;
+      }
+      @keyframes reveal { from { opacity: 0; transform: translateY(24px); } }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, [data-reveal] { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
+  }
+</style>
